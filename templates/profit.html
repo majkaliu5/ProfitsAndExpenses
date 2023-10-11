@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Profit
+{% endblock %}
+
+{% block main %}
+<!-- Daily profits header-->
+<h2 id="dailyProfitsHeader">Daily profits [ {{ date[0]["CURRENT_DATE"] }} ]</h2>
+
+<hr>
+
+<!-- Input profit header-->
+<h3 id="inputProfitHeader">Input profit</h3>
+
+<!-- Form -->
+<form action="/profit" method="post" id="inputProfitForm">
+    <input autocomplete="on" id="product" name="product" placeholder="Description" type="text">
+
+    <input autocomplete="off" id="quantity" name="quantity" placeholder="Quantity" type="number">
+
+    <input autocomplete="off" id="price" name="price" placeholder="Price" type="text">
+
+    <button type="submit">Submit</button>
+</form>
+
+<hr>
+
+<!-- Profits table -->
+<table id="myTable">
+    <thead>
+        <!-- Total amount profits -->
+        <h3 id="totalAmountProfits">Total profits : {{ totalProfits }}</h3>
+
+        <!-- Profit table headers -->
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    <!-- Profits table rows -->
+    {% for row in profits %}
+        <tr>
+            <td> {{ row["product"] }} </td>
+            <td> {{ row["quantity"] }} </td>
+            <td> {{ row["price"] }} </td>
+            <td> {{ row["price"] * row["quantity"] }} </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

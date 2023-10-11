@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+{% block main %}
+    <!-- Daily balance header -->
+    <h2 id="homeHeader">Home</h2>
+
+    <hr>
+
+    <!-- Allow users to select between day, week, month and year -->
+    <form action="/" method="post" id="form">
+
+        <label for="display">Choose display:</label>
+
+        <!-- Dropdown list -->
+        <select name="display" id="display">
+
+          <option default value="day">Day</option>
+
+          <option value="week">Week</option>
+
+          <option value="month">Month</option>
+
+          <option value="year">Year</option>
+
+        </select>
+
+        <!-- button -->
+        <button type="submit">Display</button>
+
+      </form>
+
+    <hr>
+
+    <!-- Daily total balance -->
+    <h3 id="totalBalance">Total balance : {{ totalProfits - totalExpenses}}</h3>
+
+    <hr>
+
+    <!-- Daily history table -->
+    <table id="myTable">
+        <thead>
+
+            <!-- History table headers -->
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>History</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <!-- History table rows -->
+        {% for row in history %}
+            <tr>
+                <td> {{ row["product"] }} </td>
+                <td> {{ row["quantity"] }} </td>
+                <td> {{ row["price"] }} </td>
+                <td> {{ row["price"] * row["quantity"] }} </td>
+                <td> {{ row["history"] }} </td>
+                <td> {{ row["date"] }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

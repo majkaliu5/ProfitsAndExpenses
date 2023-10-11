@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <!-- link with css -->
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <!-- Allow pages to have personal script -->
+        <script>{% block script %}{% endblock %}</script>
+
+        <!-- allow pages to have titles -->
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <!-- navigation bar -->
+        <nav>
+            <!-- if user is logged in -->
+            {% if session["user_id"] %}
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/profit">Profit</a></li>
+                    <li><a href="/expense">Expense</a></li>
+                    <li><a href="/history">History</a></li>
+                    <li style="float:right"><a href="/logout">Logout</a></li>
+                </ul>
+            <!-- if user is not logged in -->
+            {% else %}
+                <ul>
+                    <li><a href="/register">Register</a></li>
+                    <li><a href="/login">Login</a></li>
+                </ul>
+            {% endif %}
+        </nav>
+
+        <!-- main -->
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+    </body>
+</html>

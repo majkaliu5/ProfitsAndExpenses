@@ -1,0 +1,161 @@
+{% extends "layout.html" %}
+
+{% block script %}
+function myFunction()
+  {
+    // Declare variables
+    var descriptionInput, quantityInput, priceInput, historyInput, totalInput, dateInput;
+    var descriptionFilter, quantityFilter, priceFilter, historyFilter, totalFilter, dateFilter;
+    var table, tr, i;
+    var descriptionTd, quantityTd, priceTd, historyTd, totalTd, dateTd;
+    var descriptionValue, quantityValue, priceValue, historyValue, totalValue, dateValue;
+
+  // --- store inputs ---
+  descriptionInput = document.getElementById("descriptionInput");
+
+  quantityInput = document.getElementById("quantityInput");
+
+  priceInput = document.getElementById("priceInput");
+
+  historyInput = document.getElementById("historyInput");
+
+  totalInput = document.getElementById("totalInput")
+
+  dateInput = document.getElementById("dateInput")
+
+  // --- inputs to uppercase ---
+  descriptionFilter = descriptionInput.value.toUpperCase();
+
+  quantityFilter = quantityInput.value.toUpperCase();
+
+  priceFilter = priceInput.value.toUpperCase();
+
+  historyFilter = historyInput.value.toUpperCase();
+
+  totalFilter = totalInput.value.toUpperCase();
+
+  dateFilter = dateInput.value.toUpperCase();
+
+  // get table
+  table = document.getElementById("myTable");
+
+  // get rows of table
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++)
+  {
+    // --- get tds ---
+    descriptionTd = tr[i].getElementsByTagName("td")[0];
+
+    quantityTd = tr[i].getElementsByTagName("td")[1];
+
+    priceTd = tr[i].getElementsByTagName("td")[2];
+
+    historyTd = tr[i].getElementsByTagName("td")[3];
+
+    totalTd = tr[i].getElementsByTagName("td")[4];
+
+    dateTd = tr[i].getElementsByTagName("td")[5];
+
+    // check if tds are empty
+    if (descriptionTd && quantityTd && priceTd && historyTd && totalTd && dateTd)
+    {
+      // --- get value out of tds ---
+      descriptionValue = descriptionTd.textContent || descriptionTd.innerText;
+
+      quantityValue = quantityTd.textContent || quantityTd.innerText;
+
+      priceValue = priceTd.textContent || priceTd.innerText;
+
+      historyValue = historyTd.textContent || historyTd.innerText;
+
+      totalValue = totalTd.textContent || totalTd.innerText;
+
+      dateValue = dateTd.textContent || dateTd.innerText;
+
+      // if values are similar with their inputs
+      if (descriptionValue.toUpperCase().indexOf(descriptionFilter) > -1 && quantityValue.toUpperCase().indexOf(quantityFilter) > -1 && priceValue.toUpperCase().indexOf(priceFilter) > -1 && historyValue.toUpperCase().indexOf(historyFilter) > -1 && totalValue.toUpperCase().indexOf(totalFilter) > -1 && dateValue.toUpperCase().indexOf(dateFilter) > -1)
+      {
+        // display the whole row
+        tr[i].style.display = "";
+      }
+      // if not similar
+      else
+      {
+        // do not display row
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+{% endblock %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block main %}
+    <table id="myTable">
+      <thead class="header">
+          <tr>
+            <!-- Input for description-->
+            <th>
+              <input type="text" placeholder="Description" id="descriptionInput" onkeyup="myFunction()">
+            </th>
+
+            <!-- Input for quantity-->
+            <th>
+              <input type="text" placeholder="Quantity" id="quantityInput" onkeyup="myFunction()">
+            </th>
+
+             <!-- Input for price-->
+             <th>
+              <input type="text" placeholder="Price" id="priceInput" onkeyup="myFunction()">
+            </th>
+
+             <!-- Input for history -->
+             <th>
+              <input type="text" placeholder="History" id="historyInput" onkeyup="myFunction()">
+            </th>
+
+            <!-- Input for total -->
+            <th>
+              <input type="text" placeholder="Total" id="totalInput" onkeyup="myFunction()">
+            </th>
+
+            <!-- Input for date -->
+            <th>
+              <input type="text" placeholder="Date" id="dateInput" onkeyup="myFunction()">
+            </th>
+          </tr>
+
+          <!-- headers -->
+          <tr>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>History</th>
+            <th>Total</th>
+            <th>Date</th>
+          </tr>
+      </thead>
+
+    {% for row in history %}
+    <tbody>
+      <tr>
+        <td> {{ row["product"] }} </td>
+        <td> {{ row["quantity"] }} </td>
+        <td> {{ row["price"] }} </td>
+        <td> {{ row["history"] }} </td>
+        <td> {{ (row["price"] * row["quantity"]) }} </td>
+        <td> {{ row["date"] }} </td>
+      </tr>
+    </tbody>
+    {% endfor %}
+
+    <tfoot>
+    </tfoot>
+</table>
+
+{% endblock %}
